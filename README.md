@@ -1,1 +1,1 @@
-# WordCounter
+git remote add origin git# WordCounter

@@ -44,12 +44,13 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
     }
 
     @Override
-    public int getWordCount(String word) {
+    public int getWordCount(String word) throws InvalidWordInputException{
         word = translator.translateToEnglish(word);
         if(isValidWord(word)){
             return dao.getWordCount(word.toLowerCase());
+        }else{
+            throw new InvalidWordInputException("ERROR: Word can only be alphabetic characters :" + word);
         }
-        return 0;
     }
 
     @Override
@@ -64,6 +65,7 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
         return word.matches(regex);
     }
 
+    @Override
     public List<String> parseWordsInput(String input){
         List<String> wordsList = new ArrayList<>();
         String[] wordTokens =  input.split(DELIMITER);

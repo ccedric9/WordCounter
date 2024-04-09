@@ -19,7 +19,7 @@ public class WordCounterDaoImpl implements WordCounterDaoInterface{
 
     @Override
     public int getWordCount(String word) {
-        return allWords.get(word);
+        return allWords.getOrDefault(word,0);
     }
 
     @Override

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>WordCounter App</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<h1>Welcome to WordCounter App</h1>
+
+<form id= "countForm" action="/count/" method="post">
+    <label for="searchWord">Word Counter:</label><br>
+    <input type="text" id="searchWord" name="searchWord" placeholder="Enter a word to search .."><br>
+    <button type="submit">Check!</button>
+</form>
+
+<form action="/add" method="post">
+    <label for="add">Enter a word or several words, separated by whitespace or comma </label><br>
+    <input type="text" id="add" name="words"><br>
+    <button type="submit">Add</button>
+</form>
+
+<script>
+document.getElementById("countForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var searchWord = document.getElementById("searchWord").value;
+    if (searchWord.trim() !== "") { // Check if the input is not empty
+        // Construct the URL with the entered word
+        var url = "/count/" + encodeURIComponent(searchWord);
+        // Redirect to the constructed URL
+        window.location.href = url;
+    } else {
+        alert("Please enter a word to search."); // Display an alert if the input is empty
+    }
+});
+</script>
+</body>
+</html>

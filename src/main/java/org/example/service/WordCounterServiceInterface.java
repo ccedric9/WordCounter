@@ -9,8 +9,10 @@ public interface WordCounterServiceInterface {
 
     public void addWords(List<String> words) throws InvalidWordInputException;
 
-    public int getWordCount(String word);
+    public int getWordCount(String word) throws InvalidWordInputException;
 
     public Map<String,Integer> getAllWords();
+
+    public List<String> parseWordsInput(String input);
 
 }

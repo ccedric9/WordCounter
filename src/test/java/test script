@@ -1,0 +1,12 @@
+
+1. test single invalid word
+emtpy string, null, hell0 , he11o, q, y7Ik, he_llo, !(hello), ],//world, >english, extremely...long....Worrrrrrrrrrrrd
+
+2.test single valid word
+cUp,ruG,TVs, bulbs, LIQUID, woRDS, extremelylongWorrrrrrrrrrrrD
+
+3. test a list of words
+ 3.1 all valid words
+ 3.2 mixture of valid and invalid (contains "", null)
+ 3.3 all invalid
+

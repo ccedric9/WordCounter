@@ -2,12 +2,15 @@ package org.example.controller;
 
 import org.example.exception.InvalidWordInputException;
 import org.example.service.WordCounterServiceInterface;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 public class WordCounterController {
 
     private WordCounterServiceInterface service;
@@ -22,7 +25,7 @@ public class WordCounterController {
     }
 
     @GetMapping("/addwords")
-    public void addWords(String... words){
+    public void addWords(List<String> words){
         try{
             service.addWords(words);
         } catch (InvalidWordInputException e) {

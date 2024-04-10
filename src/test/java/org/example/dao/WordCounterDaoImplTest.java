@@ -5,29 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 public class WordCounterDaoImplTest {
 
-    @Mock
-    private WordCounterDaoInterface daoTest;
-
-    @BeforeEach
-    void cleanUp(){
-        daoTest = new WordCounterDaoImpl();
-    }
+    @InjectMocks
+    private WordCounterDaoImpl daoTest;
 
     @Test
     public void testDaoAtBeginning(){
         assertEquals(0, daoTest.getAllWords().size());
         assertEquals(daoTest.getWordCount("anyword"),0);
-        assertEquals(daoTest.getWordCount("x8"),0);
+        assertEquals(daoTest.getWordCount("Привет"),0);
         assertEquals(daoTest.getWordCount("x()8.."),0);
     }
 
@@ -35,16 +28,16 @@ public class WordCounterDaoImplTest {
     //as Dao is not responsible for logics, will add any string
     public void testDaoAddSingleWord(){
         List<String> list1 = new ArrayList<>();
-        list1.add("X_SD");
+        list1.add("Ciao!");
         daoTest.addWords(list1);
         assertEquals(daoTest.getAllWords().size(),1);
-        list1 = new ArrayList<>(Arrays.asList("..."));
+        list1 = new ArrayList<>(Arrays.asList("你好"));
         daoTest.addWords(list1);
         assertEquals(daoTest.getAllWords().size(),2);
 
         list1 = new ArrayList<>(Arrays.asList(""));
         daoTest.addWords(list1);
-        list1 = new ArrayList<>(Arrays.asList("LIQUID"));
+        list1 = new ArrayList<>(Arrays.asList("नमस्ते"));
         daoTest.addWords(list1);
         list1 = new ArrayList<>(Arrays.asList("test a list of words"));
         daoTest.addWords(list1);
@@ -57,7 +50,7 @@ public class WordCounterDaoImplTest {
         List<String> list1 = new ArrayList<>();
         list1.add("X_SD");
         list1.add("");
-        list1.add("xiKok");
+        list1.add("こんにちは");
         daoTest.addWords(list1);
         assertEquals(daoTest.getAllWords().size(),3);
         list1.add("999-2375");

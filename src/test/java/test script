@@ -1,6 +1,7 @@
 
 1. test single invalid word
 emtpy string, null, hell0 , he11o, q, y7Ik, he_llo, !(hello), ],//world, >english, extremely...long....Worrrrrrrrrrrrd
+other languages: ¡Hola!, Bonjour!, Hallo!, Ciao!, Привет!, 你好！, こんにちは！, مرحبا!, नमस्ते!, Olá!
 
 2.test single valid word
 cUp,ruG,TVs, bulbs, LIQUID, woRDS, extremelylongWorrrrrrrrrrrrD

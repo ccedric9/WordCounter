@@ -1,6 +1,7 @@
 package org.example.service;
 
 
+import org.example.dao.WordCounterDaoImpl;
 import org.example.dao.WordCounterDaoInterface;
 import org.example.exception.InvalidWordInputException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.Map;
 @Repository
 public class WordCounterServiceImpl implements WordCounterServiceInterface{
     
-    private WordCounterDaoInterface dao;
+    private WordCounterDaoImpl dao;
     private final TranslatorService translator;
 
     private final String WHITESPACE = "\\s+";
@@ -21,7 +22,7 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
     // allow user to add multiple words separated by COMMA or WHITESPACE
     private final String DELIMITER = "\\s*" + COMMA + "\\s*|" + WHITESPACE;
     @Autowired
-    public WordCounterServiceImpl(WordCounterDaoInterface dao, TranslatorService translator) {
+    public WordCounterServiceImpl(WordCounterDaoImpl dao, TranslatorService translator) {
         this.dao = dao;
         this.translator = translator;
     }
@@ -31,10 +32,12 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
     public void addWords(List<String> words) throws InvalidWordInputException {
         ArrayList<String> validWords = new ArrayList<>();
         for (String word : words){
+            //Translate from other languages to English
             word = translator.translateToEnglish(word);
             if(isValidWord(word)){
-                word.toLowerCase();
-                validWords.add(word);
+            //make sure all words are lowercase as Map-Key is case-sensitive
+                String str = word.toLowerCase();
+                validWords.add(str);
             }else{
                 throw new InvalidWordInputException("ERROR: Word can only be alphabetic characters :" + word);
             }
@@ -47,7 +50,8 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
     public int getWordCount(String word) throws InvalidWordInputException{
         word = translator.translateToEnglish(word);
         if(isValidWord(word)){
-            return dao.getWordCount(word.toLowerCase());
+            String str =  word.toLowerCase();
+            return dao.getWordCount(str);
         }else{
             throw new InvalidWordInputException("ERROR: Word can only be alphabetic characters :" + word);
         }
@@ -61,8 +65,13 @@ public class WordCounterServiceImpl implements WordCounterServiceInterface{
 
     //helper -- check if word input only contains alphabetic characters
     private boolean isValidWord(String word){
-        String regex = "^[a-zA-Z]+$";
-        return word.matches(regex);
+        if(word == null || word.equals("")) return false;
+        for (char w: word.toCharArray()){
+            if(!Character.isLetter(w)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
